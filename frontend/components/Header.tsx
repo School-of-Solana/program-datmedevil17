@@ -29,29 +29,27 @@ const Header = () => {
   }
 
   return (
-    <header className="w-full bg-white border-b border-gray-200 shadow-sm">
+    <header className="w-full bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 border-b border-cyber-400/20 shadow-lg">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo/Brand */}
           <div className="flex items-center">
-            <h1 className="text-xl font-bold text-gray-900">Slick</h1>
+            <h1 className="text-2xl font-headline font-bold bg-gradient-to-r from-cyber-400 to-electric-400 bg-clip-text text-transparent">
+              SLICK
+            </h1>
           </div>
 
-          {/* Navigation Links - You can add tabs here */}
+          {/* Navigation Links */}
           <div className="hidden md:flex items-center space-x-8">
-            <a href="/" className="text-gray-700 hover:text-blue-600 font-medium transition-colors">
+            <a href="/" className="text-gray-300 hover:text-cyber-400 font-medium transition-all duration-200 hover:glow">
               Home
             </a>
-            <a href="/explore" className="text-gray-700 hover:text-blue-600 font-medium transition-colors">
+            <a href="/explore" className="text-gray-300 hover:text-cyber-400 font-medium transition-all duration-200 hover:glow">
               Explore
             </a>
-            <a href="/communities" className="text-gray-700 hover:text-blue-600 font-medium transition-colors">
+            <a href="/communities" className="text-gray-300 hover:text-cyber-400 font-medium transition-all duration-200 hover:glow">
               Communities
             </a>
-            <a href="/polls" className="text-gray-700 hover:text-blue-600 font-medium transition-colors">
-              Polls
-            </a>
-            {/* Add more navigation tabs here as needed */}
           </div>
 
           {/* Wallet Connection and Profile */}
@@ -61,27 +59,27 @@ const Header = () => {
               <div className="flex items-center space-x-3">
                 {/* Profile Status Indicator */}
                 {isLoading ? (
-                  <div className="flex items-center space-x-2 px-3 py-2 text-gray-500">
-                    <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+                  <div className="flex items-center space-x-2 px-3 py-2 text-gray-400">
+                    <div className="w-4 h-4 border-2 border-cyber-400 border-t-transparent rounded-full animate-spin"></div>
                     <span className="hidden lg:inline text-sm">Loading...</span>
                   </div>
                 ) : hasProfile ? (
                   <button
                     onClick={navigateToProfile}
-                    className="flex items-center space-x-2 px-3 py-2 text-gray-700 hover:text-blue-600 font-medium transition-colors rounded-lg hover:bg-gray-50"
+                    className="flex items-center space-x-2 px-3 py-2 text-gray-300 hover:text-cyber-400 font-medium transition-all duration-200 rounded-lg hover:bg-gray-800/50 border border-transparent hover:border-cyber-400/30"
                   >
-                    <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                    <div className="w-8 h-8 bg-gradient-to-r from-cyber-500 to-electric-500 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg">
                       {profile?.displayName?.charAt(0) || publicKey.toString().charAt(0)}
                     </div>
                     <div className="hidden lg:block text-left">
                       <div className="text-sm font-medium">{profile?.displayName || 'Profile'}</div>
-                      <div className="text-xs text-gray-500">View Profile</div>
+                      <div className="text-xs text-gray-400">View Profile</div>
                     </div>
                   </button>
                 ) : (
-                  <div className="flex items-center space-x-2 px-3 py-2 text-amber-600">
-                    <div className="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center">
-                      <span className="text-amber-600 text-sm">!</span>
+                  <div className="flex items-center space-x-2 px-3 py-2 text-electric-400 bg-electric-900/20 rounded-lg border border-electric-400/30">
+                    <div className="w-8 h-8 bg-electric-500/20 rounded-full flex items-center justify-center border border-electric-400/50">
+                      <span className="text-electric-400 text-sm">!</span>
                     </div>
                     <span className="hidden lg:inline text-sm font-medium">Profile needed</span>
                   </div>
@@ -91,19 +89,19 @@ const Header = () => {
 
             {/* Wallet Connection */}
             {mounted ? (
-              <DynamicWalletMultiButton className="!bg-blue-600 hover:!bg-blue-700 !rounded-lg !text-sm !font-medium !px-4 !py-2 !transition-colors" />
+              <DynamicWalletMultiButton className="!bg-gradient-to-r !from-cyber-600 !to-electric-600 hover:!from-cyber-700 hover:!to-electric-700 !rounded-lg !text-sm !font-medium !px-6 !py-2 !transition-all !duration-200 !shadow-lg hover:!shadow-cyber-500/25 !border !border-cyber-500/30" />
             ) : (
-              <div className="bg-blue-600 rounded-lg text-sm font-medium px-4 py-2 text-white">
+              <div className="bg-gradient-to-r from-cyber-600 to-electric-600 rounded-lg text-sm font-medium px-6 py-2 text-white shadow-lg animate-pulse">
                 Select Wallet
               </div>
             )}
           </div>
 
-          {/* Mobile menu button - for future mobile navigation */}
+          {/* Mobile menu button */}
           <div className="md:hidden">
             <button
               type="button"
-              className="text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700"
+              className="text-gray-400 hover:text-cyber-400 focus:outline-none focus:text-cyber-400 transition-colors"
               aria-label="Toggle menu"
             >
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

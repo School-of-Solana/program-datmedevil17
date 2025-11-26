@@ -1,6 +1,6 @@
 # Project Description
 
-**Deployed Frontend URL:** [TODO: Add deployed frontend URL]
+**Deployed Frontend URL:** your-slick.vercel.app
 
 **Solana Program ID:** 54KY3Gg1zcRzvHH64tfoBM3T1mDaahaXUEWv9GCkGoye
 
@@ -20,7 +20,7 @@ A comprehensive decentralized social media platform built on Solana called **Sli
 - **Content Integrity**: All content includes cryptographic hashes for verification
 - **Membership Management**: Join/leave communities with on-chain membership records
 
-### How to Use the dApp
+### How to Use the dApp 
 1. **Connect Wallet** - Connect your Solana wallet to access the platform
 2. **Create Profile** - Set up your profile with a display name and avatar
 3. **Join Communities** - Browse and join communities that interest you

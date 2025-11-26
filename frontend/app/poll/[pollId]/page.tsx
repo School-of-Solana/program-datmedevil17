@@ -49,6 +49,8 @@ export default function PollDetailPage() {
   const [error, setError] = useState<string | null>(null)
   const [votingLoading, setVotingLoading] = useState(false)
   const [selectedOption, setSelectedOption] = useState<number | null>(null)
+  const [isCommunityMember, setIsCommunityMember] = useState<boolean>(false)
+  const [checkingMembership, setCheckingMembership] = useState(false)
 
   // Program instances
   const readonlyProgram = useMemo(() => getProviderReadonly(), [])
@@ -58,6 +60,22 @@ export default function PollDetailPage() {
     }
     return null
   }, [publicKey, signTransaction, sendTransaction])
+
+  // Check if user is a member of the poll's community
+  const checkMembership = async (communityPublicKey: PublicKey) => {
+    if (!publicKey || !readonlyProgram) return
+
+    setCheckingMembership(true)
+    try {
+      const isMember = await checkIfMember(readonlyProgram, publicKey, communityPublicKey)
+      setIsCommunityMember(isMember)
+    } catch (err) {
+      console.warn('Failed to check membership:', err)
+      setIsCommunityMember(false)
+    } finally {
+      setCheckingMembership(false)
+    }
+  }
 
   // Fetch poll data
   const fetchPollData = async () => {
@@ -117,12 +135,7 @@ export default function PollDetailPage() {
 
         // Check if user is member of the community
         if (publicKey) {
-          try {
-            const isMember = await checkIfMember(readonlyProgram, publicKey, pollData.community)
-            enhanced.hasUserVoted = false // Would need to check if user has already voted
-          } catch (err) {
-            console.warn('Failed to check membership:', err)
-          }
+          checkMembership(pollData.community)
         }
 
         setPoll(enhanced)
@@ -190,17 +203,17 @@ export default function PollDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 p-4">
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-4">
         <div className="max-w-4xl mx-auto">
           <div className="animate-pulse">
-            <div className="bg-white rounded-lg shadow p-6 mb-6">
-              <div className="h-6 bg-gray-200 rounded w-3/4 mb-4"></div>
-              <div className="h-4 bg-gray-200 rounded w-1/2 mb-6"></div>
+            <div className="bg-gradient-to-br from-gray-800 to-gray-700 border border-cyber-500/30 rounded-lg shadow p-6 mb-6">
+              <div className="h-6 bg-gray-600/50 rounded w-3/4 mb-4"></div>
+              <div className="h-4 bg-gray-600/50 rounded w-1/2 mb-6"></div>
               <div className="space-y-4">
                 {[...Array(3)].map((_, i) => (
-                  <div key={i} className="p-4 border border-gray-200 rounded-lg">
-                    <div className="h-4 bg-gray-200 rounded w-full mb-2"></div>
-                    <div className="h-2 bg-gray-200 rounded w-full"></div>
+                  <div key={i} className="p-4 border border-gray-600/50 rounded-lg">
+                    <div className="h-4 bg-gray-600/50 rounded w-full mb-2"></div>
+                    <div className="h-2 bg-gray-600/50 rounded w-full"></div>
                   </div>
                 ))}
               </div>
@@ -213,13 +226,13 @@ export default function PollDetailPage() {
 
   if (!poll) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Poll not found</h1>
-          <p className="text-gray-600 mb-4">The poll you're looking for doesn't exist or has been removed.</p>
+          <h1 className="text-2xl font-headline font-bold text-gray-200 mb-2">Poll not found</h1>
+          <p className="text-gray-400 mb-4">The poll you're looking for doesn't exist or has been removed.</p>
           <button
             onClick={() => router.back()}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="px-4 py-2 bg-gradient-to-r from-cyber-600 to-electric-600 hover:from-cyber-700 hover:to-electric-700 text-white rounded-lg font-medium transition-all duration-200 shadow-lg"
           >
             Go Back
           </button>
@@ -229,22 +242,22 @@ export default function PollDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
       <div className="max-w-4xl mx-auto p-4">
         {/* Back Navigation */}
         <button
           onClick={() => router.back()}
-          className="flex items-center text-gray-600 hover:text-gray-900 mb-6 transition-colors"
+          className="flex items-center text-gray-400 hover:text-gray-200 mb-6 transition-colors"
         >
           ← Back
         </button>
 
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          <div className="bg-red-900/50 border border-red-500/50 text-red-300 px-4 py-3 rounded-lg mb-4">
             {error}
             <button 
               onClick={() => setError(null)}
-              className="float-right text-red-500 hover:text-red-700"
+              className="float-right text-red-400 hover:text-red-200"
             >
               ✕
             </button>
@@ -254,25 +267,25 @@ export default function PollDetailPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Main Poll Content */}
           <div className="lg:col-span-2">
-            <div className="bg-white rounded-lg shadow-md p-6">
+            <div className="bg-gradient-to-br from-gray-800 to-gray-700 border border-cyber-500/30 rounded-lg shadow-xl p-6">
               {/* Poll Header */}
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center space-x-3">
                   <span className={`px-3 py-1 rounded-full text-sm font-medium ${
                     poll.isActive
-                      ? 'bg-green-100 text-green-700'
-                      : 'bg-red-100 text-red-600'
+                      ? 'bg-green-900/50 text-green-400 border border-green-500/50'
+                      : 'bg-red-900/50 text-red-400 border border-red-500/50'
                   }`}>
                     {poll.isActive ? '🟢 Active' : '🔴 Ended'}
                   </span>
                   <button
                     onClick={navigateToCommunity}
-                    className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm hover:bg-blue-200 transition-colors"
+                    className="px-3 py-1 bg-cyber-900/50 text-cyber-400 border border-cyber-500/50 rounded-full text-sm hover:bg-cyber-800/50 transition-colors"
                   >
                     {poll.communityInfo?.name || 'Community'}
                   </button>
                 </div>
-                <span className="text-sm text-gray-500">
+                <span className="text-sm text-gray-400">
                   Poll #{poll.account.pollId.toString()}
                 </span>
               </div>
@@ -285,55 +298,87 @@ export default function PollDetailPage() {
               {/* Voting Section */}
               {poll.isActive && publicKey && !poll.hasUserVoted ? (
                 <div className="mb-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Cast Your Vote</h3>
-                  <div className="space-y-3">
-                    {poll.account.optionProfiles.map((optionPubkey, index) => {
-                      const optionProfile = poll.optionProfilesData?.[index]
-                      return (
-                        <label
-                          key={index}
-                          className={`flex items-center p-4 border-2 rounded-lg cursor-pointer transition-colors ${
-                            selectedOption === index
-                              ? 'border-blue-500 bg-blue-50'
-                              : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
-                          }`}
-                        >
-                          <input
-                            type="radio"
-                            name="pollOption"
-                            value={index}
-                            checked={selectedOption === index}
-                            onChange={() => setSelectedOption(index)}
-                            className="sr-only"
-                          />
-                          <div className="flex items-center">
-                            <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full flex items-center justify-center text-white font-bold mr-3">
-                              {optionProfile?.displayName?.charAt(0) || String.fromCharCode(65 + index)}
-                            </div>
-                            <div>
-                              <div className="font-medium text-gray-900">
-                                {optionProfile?.displayName || `Option ${index + 1}`}
-                              </div>
-                              <div className="text-sm text-gray-500">
-                                {poll.account.votesPerOption[index]} votes
-                              </div>
-                            </div>
+                  <h3 className="text-lg font-semibold text-gray-100 mb-4">Cast Your Vote</h3>
+                  
+                  {/* Membership Check */}
+                  <div className="mb-4">
+                    {checkingMembership ? (
+                      <div className="flex items-center text-gray-400 text-sm">
+                        <div className="animate-spin w-4 h-4 border-2 border-cyber-500 border-t-transparent rounded-full mr-2"></div>
+                        Checking community membership...
+                      </div>
+                    ) : !isCommunityMember ? (
+                      <div className="bg-yellow-900/50 border border-yellow-500/50 text-yellow-300 p-3 rounded-lg">
+                        <div className="flex items-center">
+                          <span className="text-yellow-400 mr-2">⚠️</span>
+                          <div>
+                            <div className="font-medium">Community Membership Required</div>
+                            <div className="text-sm">You must be a member of this community to vote in this poll.</div>
                           </div>
-                        </label>
-                      )
-                    })}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="bg-green-900/50 border border-green-500/50 text-green-300 p-3 rounded-lg">
+                        <div className="flex items-center">
+                          <span className="text-green-400 mr-2">✓</span>
+                          <div className="text-sm">You are a community member and can vote in this poll.</div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                   
-                  {selectedOption !== null && (
-                    <div className="mt-4 flex justify-end">
-                      <button
-                        onClick={handleVote}
-                        disabled={votingLoading}
-                        className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                      >
-                        {votingLoading ? 'Casting Vote...' : 'Cast Vote'}
-                      </button>
-                    </div>
+                  {isCommunityMember && (
+                    <>
+                      <div className="space-y-3">
+                        {poll.account.optionProfiles.map((optionPubkey, index) => {
+                          const optionProfile = poll.optionProfilesData?.[index]
+                          return (
+                            <label
+                              key={index}
+                              className={`flex items-center p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 ${
+                                selectedOption === index
+                                  ? 'border-cyber-500 bg-cyber-900/30 shadow-lg'
+                                  : 'border-gray-600 hover:border-cyber-400 hover:bg-gray-700/30'
+                              }`}
+                            >
+                              <input
+                                type="radio"
+                                name="pollOption"
+                                value={index}
+                                checked={selectedOption === index}
+                                onChange={() => setSelectedOption(index)}
+                                className="sr-only"
+                              />
+                              <div className="flex items-center">
+                                <div className="w-10 h-10 bg-gradient-to-r from-cyber-500 to-electric-500 rounded-full flex items-center justify-center text-white font-bold mr-3">
+                                  {optionProfile?.displayName?.charAt(0) || String.fromCharCode(65 + index)}
+                                </div>
+                                <div>
+                                  <div className="font-medium text-gray-100">
+                                    {optionProfile?.displayName || `Option ${index + 1}`}
+                                  </div>
+                                  <div className="text-sm text-gray-400">
+                                    {poll.account.votesPerOption[index]} votes
+                                  </div>
+                                </div>
+                              </div>
+                            </label>
+                          )
+                        })}
+                      </div>
+                      
+                      {selectedOption !== null && (
+                        <div className="mt-4 flex justify-end">
+                          <button
+                            onClick={handleVote}
+                            disabled={votingLoading}
+                            className="px-6 py-3 bg-gradient-to-r from-cyber-600 to-electric-600 hover:from-cyber-700 hover:to-electric-700 text-white font-medium rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg"
+                          >
+                            {votingLoading ? 'Casting Vote...' : 'Cast Vote'}
+                          </button>
+                        </div>
+                      )}
+                    </>
                   )}
                 </div>
               ) : (

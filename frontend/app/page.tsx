@@ -326,21 +326,21 @@ export default function Home() {
 
   if (loading && posts.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-50 p-4">
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-4">
         <div className="max-w-2xl mx-auto">
           <div className="animate-pulse">
-            <div className="bg-white rounded-lg shadow p-6 mb-4">
-              <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
-              <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+            <div className="bg-gray-800/50 border border-cyber-500/20 rounded-lg shadow-xl p-6 mb-4">
+              <div className="h-4 bg-cyber-500/30 rounded w-3/4 mb-2"></div>
+              <div className="h-4 bg-cyber-500/30 rounded w-1/2"></div>
             </div>
             {[...Array(3)].map((_, i) => (
-              <div key={i} className="bg-white rounded-lg shadow p-6 mb-4">
+              <div key={i} className="bg-gray-800/50 border border-cyber-500/20 rounded-lg shadow-xl p-6 mb-4">
                 <div className="flex items-center mb-4">
-                  <div className="w-10 h-10 bg-gray-200 rounded-full mr-3"></div>
-                  <div className="h-4 bg-gray-200 rounded w-1/4"></div>
+                  <div className="w-10 h-10 bg-cyber-500/30 rounded-full mr-3"></div>
+                  <div className="h-4 bg-cyber-500/30 rounded w-1/4"></div>
                 </div>
-                <div className="h-4 bg-gray-200 rounded w-full mb-2"></div>
-                <div className="h-4 bg-gray-200 rounded w-2/3"></div>
+                <div className="h-4 bg-cyber-500/30 rounded w-full mb-2"></div>
+                <div className="h-4 bg-cyber-500/30 rounded w-2/3"></div>
               </div>
             ))}
           </div>
@@ -350,23 +350,25 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
       <div className="max-w-2xl mx-auto p-4">
-        <h1 className="text-3xl font-bold text-gray-900 mb-6">Home Feed</h1>
+        <h1 className="text-4xl font-headline font-bold bg-gradient-to-r from-cyber-400 to-electric-400 bg-clip-text text-transparent mb-6">
+          HOME FEED
+        </h1>
 
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          <div className="bg-red-900/50 border border-red-500/50 text-red-300 px-4 py-3 rounded-lg mb-4 backdrop-blur-sm">
             {error}
           </div>
         )}
 
         {/* Post Composer */}
         {publicKey && (
-          <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+          <div className="bg-gray-800/50 border border-cyber-500/30 rounded-lg shadow-xl backdrop-blur-sm p-6 mb-6">
             {!isComposing ? (
               <button
                 onClick={() => setIsComposing(true)}
-                className="w-full text-left p-3 bg-gray-100 rounded-lg text-gray-500 hover:bg-gray-200 transition-colors"
+                className="w-full text-left p-4 bg-gray-700/50 border border-cyber-500/30 rounded-lg text-gray-300 hover:bg-gray-700/70 hover:border-cyber-400/50 transition-all duration-200"
               >
                 What's on your mind?
               </button>
@@ -376,7 +378,7 @@ export default function Home() {
                   value={postContent}
                   onChange={(e) => setPostContent(e.target.value)}
                   placeholder="Share your thoughts..."
-                  className="w-full p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full p-3 bg-gray-700/50 border border-cyber-500/30 text-gray-200 placeholder-gray-400 rounded-lg resize-none focus:ring-2 focus:ring-cyber-500 focus:border-cyber-400 transition-all duration-200"
                   rows={4}
                 />
 
@@ -386,11 +388,11 @@ export default function Home() {
                     <img
                       src={imagePreview}
                       alt="Image preview"
-                      className="max-h-64 rounded-lg border border-gray-200"
+                      className="max-h-64 rounded-lg border border-cyber-500/30 shadow-lg"
                     />
                     <button
                       onClick={clearImage}
-                      className="absolute top-2 right-2 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600"
+                      className="absolute top-2 right-2 w-8 h-8 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center transition-colors shadow-lg"
                     >
                       ✕
                     </button>

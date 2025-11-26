@@ -566,13 +566,13 @@ export default function Explore() {
             <div className="text-gray-400 text-6xl mb-4">🗳️</div>
             <h3 className="text-xl font-semibold text-gray-900 mb-2">Discover Active Polls</h3>
             <p className="text-gray-600 mb-6">
-              Participate in community polls and make your voice heard
+              Join communities to participate in polls and make your voice heard
             </p>
             <button
-              onClick={() => router.push('/polls')}
+              onClick={() => router.push('/communities')}
               className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
             >
-              View All Polls
+              Explore Communities
             </button>
           </div>
         )}

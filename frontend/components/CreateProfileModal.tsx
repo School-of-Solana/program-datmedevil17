@@ -107,22 +107,24 @@ export default function CreateProfileModal() {
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-lg max-w-md w-full">
+    <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+      <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-cyber-500/30 rounded-lg max-w-md w-full shadow-2xl">
         <div className="p-6">
           {/* Header */}
           <div className="text-center mb-6">
-            <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-gradient-to-r from-cyber-500 to-electric-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
               <span className="text-white text-2xl">👤</span>
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Create Your Profile</h2>
-            <p className="text-gray-600">
+            <h2 className="text-2xl font-headline font-bold bg-gradient-to-r from-cyber-400 to-electric-400 bg-clip-text text-transparent mb-2">
+              CREATE YOUR PROFILE
+            </h2>
+            <p className="text-gray-300">
               Set up your profile to start participating in the community
             </p>
           </div>
 
           {error && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            <div className="bg-red-900/50 border border-red-500/50 text-red-300 px-4 py-3 rounded-lg mb-4">
               {error}
             </div>
           )}
@@ -130,7 +132,7 @@ export default function CreateProfileModal() {
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="displayName" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="displayName" className="block text-sm font-medium text-gray-300 mb-1">
                 Display Name *
               </label>
               <input
@@ -139,17 +141,17 @@ export default function CreateProfileModal() {
                 value={formData.displayName}
                 onChange={(e) => setFormData(prev => ({ ...prev, displayName: e.target.value }))}
                 placeholder="Enter your display name"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 bg-gray-700/50 border border-cyber-500/30 text-gray-200 placeholder-gray-400 rounded-lg focus:ring-2 focus:ring-cyber-500 focus:border-cyber-400 transition-all"
                 maxLength={50}
                 required
               />
-              <div className="text-xs text-gray-500 mt-1">
+              <div className="text-xs text-gray-400 mt-1">
                 This is how others will see you in the community
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-300 mb-1">
                 Avatar Image
               </label>
               
@@ -165,7 +167,7 @@ export default function CreateProfileModal() {
                       />
                     </div>
                   ) : (
-                    <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-xl">
+                    <div className="w-20 h-20 bg-gradient-to-r from-cyber-500 to-electric-500 rounded-full flex items-center justify-center text-white font-bold text-xl">
                       {formData.displayName ? formData.displayName.charAt(0).toUpperCase() : '?'}
                     </div>
                   )}
@@ -174,7 +176,7 @@ export default function CreateProfileModal() {
                     <button
                       type="button"
                       onClick={clearImage}
-                      className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-sm hover:bg-red-600"
+                      className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center text-sm transition-colors"
                     >
                       ✕
                     </button>
@@ -195,7 +197,7 @@ export default function CreateProfileModal() {
                       type="button"
                       onClick={() => fileInputRef.current?.click()}
                       disabled={uploadingImage}
-                      className="px-3 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 disabled:opacity-50 text-sm"
+                      className="px-3 py-2 bg-gray-700/50 border border-cyber-500/30 text-gray-200 hover:bg-gray-600/50 hover:border-cyber-400/50 disabled:opacity-50 text-sm rounded-lg transition-all"
                     >
                       Choose Image
                     </button>
@@ -205,7 +207,7 @@ export default function CreateProfileModal() {
                         type="button"
                         onClick={handleUploadImage}
                         disabled={uploadingImage}
-                        className="px-3 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 text-sm"
+                        className="px-3 py-2 bg-gradient-to-r from-cyber-600 to-electric-600 hover:from-cyber-700 hover:to-electric-700 text-white rounded-lg disabled:opacity-50 text-sm transition-all"
                       >
                         {uploadingImage ? 'Uploading...' : 'Upload to IPFS'}
                       </button>
@@ -214,13 +216,13 @@ export default function CreateProfileModal() {
                 </div>
               </div>
               
-              <div className="text-xs text-gray-500 mt-1">
+              <div className="text-xs text-gray-400 mt-1">
                 Upload an image or leave empty for a generated avatar
               </div>
             </div>
 
             <div>
-              <label htmlFor="avatarUri" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="avatarUri" className="block text-sm font-medium text-gray-300 mb-1">
                 Avatar URL (Alternative)
               </label>
               <input
@@ -229,18 +231,18 @@ export default function CreateProfileModal() {
                 value={formData.avatarUri}
                 onChange={(e) => setFormData(prev => ({ ...prev, avatarUri: e.target.value }))}
                 placeholder="https://example.com/avatar.png"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 bg-gray-700/50 border border-cyber-500/30 text-gray-200 placeholder-gray-400 rounded-lg focus:ring-2 focus:ring-cyber-500 focus:border-cyber-400 transition-all"
                 disabled={!!selectedFile}
               />
-              <div className="text-xs text-gray-500 mt-1">
+              <div className="text-xs text-gray-400 mt-1">
                 Or paste a direct image URL instead of uploading
               </div>
             </div>
 
             {/* Preview */}
             {formData.displayName && (
-              <div className="bg-gray-50 rounded-lg p-4">
-                <div className="text-sm text-gray-700 mb-2">Preview:</div>
+              <div className="bg-gray-800/50 border border-cyber-500/20 rounded-lg p-4">
+                <div className="text-sm text-gray-300 mb-2">Preview:</div>
                 <div className="flex items-center">
                   <div className="w-10 h-10 rounded-full overflow-hidden mr-3">
                     {formData.avatarUri || previewUrl ? (
@@ -250,25 +252,25 @@ export default function CreateProfileModal() {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <div className="w-full h-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold">
+                      <div className="w-full h-full bg-gradient-to-r from-cyber-500 to-electric-500 flex items-center justify-center text-white font-bold">
                         {formData.displayName.charAt(0).toUpperCase()}
                       </div>
                     )}
                   </div>
                   <div>
-                    <div className="font-medium text-gray-900">{formData.displayName}</div>
-                    <div className="text-sm text-gray-500">Community Member</div>
+                    <div className="font-medium text-gray-200">{formData.displayName}</div>
+                    <div className="text-sm text-gray-400">Community Member</div>
                   </div>
                 </div>
               </div>
             )}
 
             {/* Actions */}
-            <div className="flex space-x-3 pt-4">
+            <div className="flex space-x-3 pt-4 border-t border-cyber-500/20">
               <button
                 type="button"
                 onClick={handleSkip}
-                className="flex-1 px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
+                className="flex-1 px-4 py-2 text-gray-400 hover:text-gray-200 transition-colors"
                 disabled={creating || isLoading}
               >
                 Skip for now
@@ -276,7 +278,7 @@ export default function CreateProfileModal() {
               <button
                 type="submit"
                 disabled={!formData.displayName.trim() || creating || isLoading || uploadingImage}
-                className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="flex-1 px-4 py-2 bg-gradient-to-r from-cyber-600 to-electric-600 hover:from-cyber-700 hover:to-electric-700 text-white rounded-lg font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
               >
                 {creating || isLoading ? (
                   <span className="flex items-center justify-center">
@@ -294,8 +296,8 @@ export default function CreateProfileModal() {
           </form>
 
           {/* Note */}
-          <div className="mt-4 p-3 bg-blue-50 rounded-lg">
-            <div className="text-sm text-blue-800">
+          <div className="mt-4 p-3 bg-cyber-900/20 border border-cyber-500/30 rounded-lg">
+            <div className="text-sm text-cyber-300">
               <strong>Note:</strong> Your profile is stored on the Solana blockchain. 
               You can update it later in your settings.
             </div>
