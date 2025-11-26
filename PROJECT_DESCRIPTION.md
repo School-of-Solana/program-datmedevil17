@@ -1,6 +1,6 @@
 # Project Description
 
-**Deployed Frontend URL:** your-slick.vercel.app
+**Deployed Frontend URL:** [your-slick.vercel.app](your-slick.vercel.app)
 
 **Solana Program ID:** 54KY3Gg1zcRzvHH64tfoBM3T1mDaahaXUEWv9GCkGoye
 
